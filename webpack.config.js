@@ -43,6 +43,22 @@ module.exports = {
           use: ["css-loader", "sass-loader"]
         })
       },
+      // 解析less文件
+      {
+        test: /\.less$/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: ["css-loader", "less-loader"]
+        })
+      },
+      // 解析stylus文件
+      {
+        test: /\.styl$/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: ["css-loader", "stylus-loader"]
+        })
+      },
       // 字体
       {
         test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
@@ -61,7 +77,9 @@ module.exports = {
   // 插件配置
   plugins: [
       new HtmlWebpackPlugin({
-          template: './index.html' // 模版文件
+          template: './index.html', // 模版文件
+          collapseWhitespace: true,
+          ignoreCustomComments: [ /^!/ ]
       }),
       new ExtractTextPlugin({
       	filename: 'style.css'
@@ -76,4 +94,21 @@ module.exports = {
     noInfo: true
   },
   devtool: '#eval-source-map'
+}
+
+// cross-env 跨平台解决方案
+if (process.env.NODE_ENV === 'production') {
+  module.exports.devtool = '#source-map'
+  module.exports.plugins = (module.exports.plugins || []).concat([
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"production"'
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
+  ])
 }
