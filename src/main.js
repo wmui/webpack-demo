@@ -1,6 +1,5 @@
-import {hello,hello1} from './assets/script/hello1';
-import {demo} from './assets/script/hello';
-import './assets/style/cssdemo.css';
-import './assets/style/lessdemo.less';
-import './assets/style/sassdemo.scss';
-import './assets/style/stylusdemo.styl';
+import './assets/scripts/test.js';
+import './assets/styles/cssdemo.css';
+import './assets/styles/sassdemo.scss';
+
+// todo
